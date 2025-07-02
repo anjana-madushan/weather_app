@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import logo from '../assets/images/icon.png';
 import WeatherCard from '../components/WeatherCard';
 import WeatherDetails from '../components/WeatherDetails';
-import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 const Dashboard = () => {
 
@@ -30,9 +29,8 @@ const Dashboard = () => {
   return (
     <div className="flex items-center justify-center">
       <div className='flex flex-col items-center'>
-        <div className='flex items-center gap-2 pt-10 pb-5'>
-          <img src={logo} className='md:h-10 md:w-10 h-8 w-8' />
-          <h2 className='font-semibold sm:text-2xl text-xl'>Weather App</h2>
+        <div className='pt-10 pb-5 px-20'>
+          <Header />
         </div>
         {!selectedCity ?
           <div className='grid grid-cols-1 md:grid-cols-2 md:gap-7 gap-2 px-5 md:px-2'>
