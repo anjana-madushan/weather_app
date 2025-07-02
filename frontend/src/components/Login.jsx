@@ -1,13 +1,18 @@
 import logo from '../assets/images/login-icon.png';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Login = () => {
+
+  const { loginWithRedirect } = useAuth0();
+
   return (
     <div className="flex flex-col md:flex-row items-center justify-between gap-20">
       <div className='flex flex-col gap-20'>
         <h1 className="text-7xl font-bold text-center">Welcome to <br /><span className='text-orange-300'>WeatherCore</span></h1>
         <div>
           <p className="text-sm text-gray-400 text-center">Please sign in to view live weather data.</p>
-          <button className="w-full text-sm font-medium text-white bg-primary shadow-lg shadow-purple-600/5 p-[10px] rounded-md my-1 hover:bg-blue-600/15 hover:text-blue-600 cursor-pointer">
+          <button className="w-full text-sm font-medium text-white bg-primary shadow-lg shadow-purple-600/5 p-[10px] rounded-md my-1 hover:bg-blue-600/15 hover:text-blue-600 cursor-pointer"
+            onClick={loginWithRedirect}>
             Login
           </button>
         </div>
