@@ -9,6 +9,8 @@ const API_KEY = process.env.API_KEY;
 
 const app = express();
 
+app.use(cors());
+
 app.get('/api/weather', async (req, res) => {
   try {
     const fileContent = fs.readFileSync('./cities.json', 'utf8');
