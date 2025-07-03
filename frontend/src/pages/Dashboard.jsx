@@ -72,7 +72,7 @@ const Dashboard = () => {
             ))}
           </div>
           :
-          <div className='flex justify-center items-center min-h-[70vh] w-full px-8 sm:px-4'>
+          <div className='flex justify-center items-center min-h-[80vh] sm:min-h-[70vh] w-full px-8 sm:px-4'>
             <WeatherDetails city={selectedCity} setSelectedCity={setSelectedCity} />
           </div>
         }

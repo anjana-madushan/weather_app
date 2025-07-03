@@ -7,9 +7,14 @@ const WeatherDetails = ({ city, setSelectedCity }) => {
   const { name, sys, wind, main, weather, visibility, timezone } = city;
 
   return (
-    <div className='flex flex-col h-full w-full items-center justify-center bg-blue-600/15 text-white sm:rounded-sm rounded-xl shadow-sm overflow-hidden'>
+    <div className='flex flex-col items-center justify-center w-full max-w-3xl bg-blue-600/15 text-white sm:rounded-sm rounded-xl shadow-sm overflow-hidden'>
       <div className='flex flex-col sm:py-4 pt-4 pb-10 justify-between sm:gap-2 sm:w-full gap-2 sm:px-8'>
-        <FaArrowLeft className='sm:text-sm cursor-pointer' onClick={() => setSelectedCity(null)} />
+        <div className="w-full flex justify-baseline mr-[200px]">
+          <FaArrowLeft
+            className="sm:text-sm text-base cursor-pointer"
+            onClick={() => setSelectedCity(null)}
+          />
+        </div>
         <div className='sm:py-4'>
           <div className='flex flex-col items-center text-center'>
             <p className='sm:text-xl text-sm font-semibold'>{name || ''}, {sys?.country || ''}</p>
@@ -36,7 +41,7 @@ const WeatherDetails = ({ city, setSelectedCity }) => {
         </div>
       </div>
 
-      <div className="flex items-center justify-center bg-neutral-600 sm:py-10 py-6 text-[10px] sm:text-xs w-full">
+      <div className="flex items-center justify-center bg-neutral-600 sm:py-10 py-6 text-xs w-full">
         <div className='grid grid-cols-2 sm:grid-cols-4 sm:gap-4 gap-2 sm:px-10 px-2 sm:divide-x'>
           <div className="flex flex-col sm:items-start px-1">
             <p>Humidity: {main?.humidity ?? 'N/A'}</p>
