@@ -6,14 +6,14 @@ import Header from '../components/Header';
 const Dashboard = () => {
 
   const [weatherList, setWeatherList] = useState([]);
-  const [selectedCity, setSelectedCity] = useState(false);
+  const [selectedCity, setSelectedCity] = useState(null);
 
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const response = await fetch('/cities.json');
-        const data = await response.json();
-        setWeatherList(data.List);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/weather`);
+        const weatherData = await response.json()
+        setWeatherList(weatherData.data);
       } catch (error) {
         console.error('Failed to load cities:', error);
       }
@@ -22,8 +22,8 @@ const Dashboard = () => {
     fetchWeatherData();
   }, []);
 
-  const handleOnClick = () => {
-    setSelectedCity(true);
+  const handleOnClick = (city) => {
+    setSelectedCity(city);
   }
 
   return (
@@ -35,14 +35,14 @@ const Dashboard = () => {
         {!selectedCity ?
           <div className='grid grid-cols-1 md:grid-cols-2 md:gap-7 gap-2 px-5 md:px-2'>
             {weatherList.map((city) => (
-              <div key={city.CityCode}>
-                <WeatherCard onClick={handleOnClick} />
+              <div key={city.id}>
+                <WeatherCard onClick={() => handleOnClick(city)} weatherData={city} />
               </div>
             ))}
           </div>
           :
           <div className='flex items-center pt-10 sm:pt-20'>
-            <WeatherDetails setSelectedCity={setSelectedCity} />
+            <WeatherDetails city={selectedCity} setSelectedCity={setSelectedCity} />
           </div>
         }
       </div>
