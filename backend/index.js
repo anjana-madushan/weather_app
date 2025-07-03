@@ -2,21 +2,35 @@ import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
 import cors from 'cors';
-import fs from 'fs';
+import { readCityCodes } from './utils/readCityCodes.js';
+import { getCacheData, setCacheData } from './utils/cache.js';
+
 const PORT = process.env.PORT || 4000;
 const OPEN_WEATHER_MAP_URL = process.env.OPEN_WEATHER_MAP_URL;
 const API_KEY = process.env.API_KEY;
+
+// read city codes asynchronously startup 
+const cityCodes = await readCityCodes();
 
 const app = express();
 
 app.use(cors());
 
+/**
+ * GET /api/weather
+ * Fetches weather data for a list of cities using city codes.
+ * Use cache to reduce redundant API calls to improve response time.
+ */
 app.get('/api/weather', async (req, res) => {
   try {
-    const fileContent = fs.readFileSync('./cities.json', 'utf8');
-    const cities = JSON.parse(fileContent);
-    const cityCodes = cities.List.map(city => city.CityCode);
 
+    //Check cache is available or not
+    const cacheData = getCacheData('weatherData');
+    if (cacheData) {
+      return res.status(200).json({ source: 'cache', data: cacheData });
+    }
+
+    //Fetching fresh weather Data for each city
     const response = await Promise.all(
       cityCodes.map(async id => {
         try {
@@ -26,13 +40,18 @@ app.get('/api/weather', async (req, res) => {
           }
           return await res.json();
         } catch (err) {
-          console.error(`Error for city ID ${id}:`, err.message);
+          console.error({ message: `There was a problem fetching weather data for city Id: ${id}:`, err: err.message });
           return null;
         }
       })
     );
 
-    return res.json({ source: 'api', data: response.filter(r => r !== null) });
+    const cleanWeatherData = response.filter(res => res !== null);
+
+    setCacheData('weatherData', cleanWeatherData);
+
+    return res.status(200).json({ data: cleanWeatherData });
+
   } catch (error) {
     return res.status(500).json({
       message: 'There is an error in the server',
@@ -41,7 +60,7 @@ app.get('/api/weather', async (req, res) => {
   }
 });
 
-
+//start the express server
 app.listen(PORT, () => {
   console.log(`Server is running on Port ${PORT}`);
 })
