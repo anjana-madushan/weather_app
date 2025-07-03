@@ -9,9 +9,6 @@ const PORT = process.env.PORT || 4000;
 const OPEN_WEATHER_MAP_URL = process.env.OPEN_WEATHER_MAP_URL;
 const API_KEY = process.env.API_KEY;
 
-// read city codes asynchronously startup 
-const cityCodes = await readCityCodes();
-
 const app = express();
 
 app.use(cors());
@@ -23,6 +20,9 @@ app.use(cors());
  */
 app.get('/api/weather', async (req, res) => {
   try {
+
+    // read city codes asynchronously startup 
+    const cityCodes = await readCityCodes();
 
     //Check cache is available or not
     const cacheData = getCacheData('weatherData');

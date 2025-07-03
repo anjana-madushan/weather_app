@@ -9,6 +9,6 @@ export const readCityCodes = async () => {
   }
   catch (error) {
     console.error('Failed to load city codes:', error.message);
-    return [];
+    throw error;
   }
 }
