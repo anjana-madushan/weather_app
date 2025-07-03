@@ -1,4 +1,4 @@
-export function UnixTimeCovert(unixTime) {
+export function UnixTimeConvert(unixTime) {
   if (!unixTime) return '--';
 
   const date = new Date(unixTime * 1000);
