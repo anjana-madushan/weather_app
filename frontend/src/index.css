@@ -12,7 +12,16 @@
   }
 
   body {
-    background-color: #fcfbfc;
+    background-image: url('./assets/bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #1f2544;
     overflow-x: hidden;
   }
+}
+
+.btn_primary {
+  @apply text-sm font-medium text-white bg-primary px-6 py-2 rounded-md hover:bg-blue-200 hover:text-blue-600 shadow cursor-pointer
 }

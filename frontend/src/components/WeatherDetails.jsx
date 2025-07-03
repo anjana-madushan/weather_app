@@ -7,7 +7,7 @@ const WeatherDetails = ({ city, setSelectedCity }) => {
   const { name, sys, wind, main, weather, visibility, timezone } = city;
 
   return (
-    <div className='flex flex-col h-full w-full items-center justify-center bg-blue-400 text-white sm:rounded-sm rounded-xl shadow-sm overflow-hidden'>
+    <div className='flex flex-col h-full w-full items-center justify-center bg-blue-600/15 text-white sm:rounded-sm rounded-xl shadow-sm overflow-hidden'>
       <div className='flex flex-col sm:py-4 pt-4 pb-10 justify-between sm:gap-2 sm:w-full gap-2 sm:px-8'>
         <FaArrowLeft className='sm:text-sm cursor-pointer' onClick={() => setSelectedCity(null)} />
         <div className='sm:py-4'>

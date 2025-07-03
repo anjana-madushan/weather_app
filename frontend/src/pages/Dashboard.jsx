@@ -29,7 +29,7 @@ const Dashboard = () => {
   return (
     <div className="flex justify-center">
       <div className='flex flex-col items-center'>
-        <div className='pt-10 pb-5 px-5 md:px-20'>
+        <div className='py-5 px-5'>
           <Header />
         </div>
         {!selectedCity ?

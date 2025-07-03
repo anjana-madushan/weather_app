@@ -3,23 +3,27 @@ import { CiLogout } from "react-icons/ci";
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Header = () => {
-
   const { logout } = useAuth0();
 
   return (
-    <div className='flex bg-transparent w-full justify-between border-none rounded-2xl items-center gap-20'>
-      <div className='w-full flex justify-center items-center'>
-        <img src={icon} className='md:h-10 md:w-10 h-8 w-8 mb-2 hidden sm:block ' />
-        <h2 className='font-semibold sm:text-3xl text-xl'>WeatherCore</h2>
+    <div className="w-full flex items-center justify-between px-4 sm:px-8 bg-transparent rounded-2xl sm:gap-20 gap-10">
+      <div className="flex items-center sm:gap-3">
+        <img
+          src={icon}
+          alt="Logo"
+          className="h-8 w-8 sm:h-10 sm:w-10 mb-2"
+        />
+        <h2 className="font-semibold text-xl sm:text-3xl text-gray-200 italic">WeatherCore</h2>
       </div>
-
-      <button className="flex px-2 gap-2 w-full items-center text-sm font-medium text-white bg-primary shadow-lg shadow-purple-600/5 p-[10px] rounded-md my-1 hover:bg-blue-600/15 hover:text-blue-600 cursor-pointer justify-center"
-        onClick={() => logout({ returnTo: window.location.origin })}>
-        <CiLogout className='text-xl font-semibold' />
-        <span className='hidden sm:block'>Log Out</span>
+      <button
+        onClick={() => logout({ returnTo: window.location.origin })}
+        className="flex items-center gap-2 btn_primary"
+      >
+        <CiLogout className="text-lg sm:text-xl" />
+        <span className="hidden sm:inline">Log Out</span>
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

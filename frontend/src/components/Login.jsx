@@ -6,19 +6,17 @@ const Login = () => {
 
   return (
     <div className="min-h-screen w-full flex flex-col-reverse lg:flex-row items-center justify-center lg:gap-20 gap-10 px-6 py-10">
-
-      {/* Text & Button Section */}
       <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-6 max-w-md">
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight">
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-200">
           Welcome to <br />
           <span className="text-orange-300">WeatherCore</span>
         </h1>
-        <p className="text-sm text-gray-300">
+        <p className="text-[16px] text-white">
           Please sign in to view live weather data.
         </p>
         <button
           onClick={loginWithRedirect}
-          className="text-sm font-medium text-white bg-primary shadow-md px-6 py-2 rounded-md hover:bg-blue-600/20 hover:text-blue-600"
+          className="btn_primary"
         >
           Login
         </button>
