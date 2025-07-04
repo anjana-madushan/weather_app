@@ -47,14 +47,18 @@ npm install
 
 ### 3. Configure Environment Variables
 #### Backend (`backend/.env`)
+```bash
 PORT=3000
 OPEN_WEATHER_MAP_URL=https://api.openweathermap.org/data/2.5/weather
 API_KEY=your_openweathermap_api_key
+```
 
 #### Frontend (`frontend/.env`)
+```bash
 VITE_BACKEND_URL=http://localhost:3000
 VITE_DOMAIN=your-auth0-domain
 VITE_CLIENT_ID=your-auth0-client-id
+```
 
 ### 4. Configure Open Weather App
 - Log in to the open weather app select the relevent plan(Current weather and forecasts<=I used this service). 0
