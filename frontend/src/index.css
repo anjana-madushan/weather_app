@@ -22,6 +22,14 @@
   }
 }
 
+.bg-card {
+  background-image: url('./assets/card-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: overlay;
+}
+
 .btn_primary {
   @apply text-sm font-medium text-white bg-primary px-6 py-2 rounded-md hover:bg-blue-200 hover:text-blue-600 shadow cursor-pointer
 }

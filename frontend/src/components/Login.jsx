@@ -2,6 +2,7 @@ import logo from '../assets/images/login-icon.png';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const Login = () => {
+
   const { loginWithRedirect } = useAuth0();
 
   return (
@@ -9,7 +10,7 @@ const Login = () => {
       <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-6 max-w-md">
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-gray-200">
           Welcome to <br />
-          <span className="text-orange-300">WeatherCore</span>
+          <span className="text-orange-200">WeatherCore</span>
         </h1>
         <p className="text-[16px] text-white">
           Please sign in to view live weather data.
@@ -24,7 +25,7 @@ const Login = () => {
       <img
         src={logo}
         alt="Login Icon"
-        className="h-48 w-48 sm:h-64 sm:w-64 lg:h-96 lg:w-96 object-contain rounded-full border-2 border-orange-300"
+        className="h-48 w-48 sm:h-64 sm:w-64 lg:h-96 lg:w-96 object-contain rounded-full border-5 border-orange-200"
       />
     </div>
   );

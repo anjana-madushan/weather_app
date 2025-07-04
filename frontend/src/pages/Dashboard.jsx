@@ -22,7 +22,7 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, [isLoading]);
 
-
+  //Get api request to fetch weather data for cities
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
@@ -63,7 +63,7 @@ const Dashboard = () => {
               {error}
             </p>
           </div>
-        ) : (selectedCity == null && error == null && !isLoading) ?
+        ) : (!selectedCity) ?
           <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 md:gap-8 gap-2 px-2 md:px-5'>
             {weatherList.map((city) => (
               <div key={city.id}>
