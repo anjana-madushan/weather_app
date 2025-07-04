@@ -61,7 +61,7 @@ VITE_CLIENT_ID=your-auth0-client-id
 ```
 
 ### 4. Configure Open Weather App
-- Log in to the open weather app select the relevent plan(Current weather and forecasts<=I used this service). 0
+- Log in to the open weather app select the relevent plan(Current weather and forecasts<=I used this service).
 - Get your API key to add .env/backend file 
 
 ### 4. Configure Auth0 Application
