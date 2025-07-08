@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(null);
   const [dotCount, setDotCount] = useState(1);
   const [error, setError] = useState(null);
+  const ttl = 300000;
 
   useEffect(() => {
     if (!isLoading) return;
@@ -26,10 +27,28 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/weather`);
-        setWeatherList(response.data.data);
-        setLoading(false);
+        //check weather weather data is in the localstorage using the key
+        const cacheData = localStorage.getItem('weather_cache');
+
+        const parseCacheData = cacheData ? JSON.parse(cacheData) : null;
+        const isCacheValid = parseCacheData && parseCacheData.timestamp && (Date.now() - parseCacheData.timestamp < ttl);
+        if (isCacheValid) {
+          setWeatherList(parseCacheData.data);
+        } else {
+          setLoading(true);
+          const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/weather`);
+          const weatherData = response.data.data;
+
+          //store the weather data in local storage 
+          localStorage.setItem(
+            'weather_cache',
+            JSON.stringify({
+              timestamp: Date.now(),
+              data: weatherData,
+            }))
+
+          setWeatherList(weatherData);
+        }
       } catch (error) {
         setError('Something went wrong while loading data. Please try again later!');
         console.error('Failed to load cities:', error);
