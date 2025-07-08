@@ -21,13 +21,17 @@ app.use(cors());
 app.get('/api/weather', async (req, res) => {
   try {
 
-    // read city codes asynchronously startup 
-    const cityCodes = await readCityCodes();
+    const cityIdParams = req.query.cityIds;
 
-    //Check cache is available or not
-    const cacheData = getCacheData('weatherData');
-    if (cacheData) {
-      return res.status(200).json({ source: 'cache', data: cacheData });
+    let cityCodes;
+
+    if (!cityIdParams) {
+      cityCodes = await readCityCodes();
+      console.log('cityIdParams')
+    } else {
+      console.log('cityIds')
+      const cityIds = cityIdParams.split(',');
+      cityCodes = cityIds;
     }
 
     //Fetching fresh weather Data for each city
@@ -47,8 +51,6 @@ app.get('/api/weather', async (req, res) => {
     );
 
     const cleanWeatherData = response.filter(res => res !== null);
-
-    setCacheData('weatherData', cleanWeatherData);
 
     return res.status(200).json({ data: cleanWeatherData });
 
