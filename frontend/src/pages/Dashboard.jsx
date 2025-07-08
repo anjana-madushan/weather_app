@@ -3,6 +3,7 @@ import axios from 'axios';
 import WeatherCard from '../components/WeatherCard';
 import WeatherDetails from '../components/WeatherDetails';
 import Header from '../components/Header';
+import { addTTls } from '../utils/addTtls';
 
 const Dashboard = () => {
 
@@ -11,7 +12,6 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(null);
   const [dotCount, setDotCount] = useState(1);
   const [error, setError] = useState(null);
-  const ttl = 300000;
 
   useEffect(() => {
     if (!isLoading) return;
@@ -23,32 +23,46 @@ const Dashboard = () => {
     return () => clearInterval(interval);
   }, [isLoading]);
 
+
+
   //Get api request to fetch weather data for cities
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
+
         //check weather weather data is in the localstorage using the key
         const cacheData = localStorage.getItem('weather_cache');
-
         const parseCacheData = cacheData ? JSON.parse(cacheData) : null;
-        const isCacheValid = parseCacheData && parseCacheData.timestamp && (Date.now() - parseCacheData.timestamp < ttl);
-        if (isCacheValid) {
-          setWeatherList(parseCacheData.data);
-        } else {
-          setLoading(true);
-          const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/weather`);
-          const weatherData = response.data.data;
 
-          //store the weather data in local storage 
-          localStorage.setItem(
-            'weather_cache',
-            JSON.stringify({
-              timestamp: Date.now(),
-              data: weatherData,
-            }))
+        //filtering the cities with valid cache data
+        if (parseCacheData && Array.isArray(parseCacheData.data)) {
+          const validCacheCities = parseCacheData.data.filter(city => Date.now() - parseCacheData.timestamp < city.ttl);
 
-          setWeatherList(weatherData);
+          if (validCacheCities.length > parseCacheData.data.length / 2) {
+            setWeatherList(validCacheCities);
+            return;
+          }
         }
+
+        setLoading(true);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/weather`);
+
+        //add ttls for each city
+        const weatherData = response.data.data.map(city => ({
+          ...city,
+          ttl: addTTls(city)
+        }))
+
+        //store the weather data in local storage 
+        localStorage.setItem(
+          'weather_cache',
+          JSON.stringify({
+            timestamp: Date.now(),
+            data: weatherData,
+          }))
+
+        setWeatherList(weatherData);
+
       } catch (error) {
         setError('Something went wrong while loading data. Please try again later!');
         console.error('Failed to load cities:', error);
@@ -59,6 +73,8 @@ const Dashboard = () => {
 
     fetchWeatherData();
   }, []);
+
+
 
   const handleOnClick = (city) => {
     setSelectedCity(city);
