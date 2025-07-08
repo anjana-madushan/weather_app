@@ -29,6 +29,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
+        let invalidCityIds = [];
+        let validCacheCities = [];
 
         //check weather weather data is in the localstorage using the key
         const cacheData = localStorage.getItem('weather_cache');
@@ -36,32 +38,42 @@ const Dashboard = () => {
 
         //filtering the cities with valid cache data
         if (parseCacheData && Array.isArray(parseCacheData.data)) {
-          const validCacheCities = parseCacheData.data.filter(city => Date.now() - parseCacheData.timestamp < city.ttl);
+          parseCacheData.data.forEach(city => {
+            if (Date.now() - parseCacheData.timestamp < city.ttl) {
+              validCacheCities.push(city);
+            } else {
+              invalidCityIds.push(city.id);
+            }
+          });
 
-          if (validCacheCities.length > parseCacheData.data.length / 2) {
+          if (invalidCityIds.length === 0) {
             setWeatherList(validCacheCities);
             return;
           }
         }
 
         setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/weather`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/weather`, {
+          params: invalidCityIds.length > 0 ? { cityIds: invalidCityIds.join(",") } : {}
+        });
 
         //add ttls for each city
         const weatherData = response.data.data.map(city => ({
           ...city,
           ttl: addTTls(city)
-        }))
+        }));
+
+        const combinedWeatherData = [...validCacheCities, ...weatherData];
 
         //store the weather data in local storage 
         localStorage.setItem(
           'weather_cache',
           JSON.stringify({
             timestamp: Date.now(),
-            data: weatherData,
+            data: combinedWeatherData,
           }))
 
-        setWeatherList(weatherData);
+        setWeatherList(combinedWeatherData);
 
       } catch (error) {
         setError('Something went wrong while loading data. Please try again later!');
