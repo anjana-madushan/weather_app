@@ -16,7 +16,13 @@ const Header = () => {
         <h2 className="font-semibold text-xl sm:text-3xl text-gray-200 italic">WeatherCore</h2>
       </div>
       <button
-        onClick={() => logout({ returnTo: window.location.origin })}
+        onClick={() => {
+          localStorage.clear();
+          logout({
+            returnTo: window.location.origin
+          })
+        }
+        }
         className="flex items-center gap-2 btn_primary"
       >
         <CiLogout className="text-lg sm:text-xl" />
