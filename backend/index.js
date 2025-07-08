@@ -27,9 +27,7 @@ app.get('/api/weather', async (req, res) => {
 
     if (!cityIdParams) {
       cityCodes = await readCityCodes();
-      console.log('cityIdParams')
     } else {
-      console.log('cityIds')
       const cityIds = cityIdParams.split(',');
       cityCodes = cityIds;
     }
