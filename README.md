@@ -50,18 +50,18 @@ npm install
 ```bash
 PORT=3000
 OPEN_WEATHER_MAP_URL=https://api.openweathermap.org/data/2.5/weather
-API_KEY=5f4910fcaffce9f309ce987bdf5dec37
+API_KEY=############
 ```
 
 #### Frontend (`frontend/.env`)
 ```bash
 VITE_BACKEND_URL=http://localhost:3000
-VITE_DOMAIN=dev-0qbp7j54gctne7e2.us.auth0.com
-VITE_CLIENT_ID=0Fz5NCKa5x5zq7f9aZYugN8xMHhpbqzv
+VITE_DOMAIN=dev-##########
+VITE_CLIENT_ID=###############
 ```
 
 ### 4. Configure Open Weather App
-- Log in to the open weather app, select the relevent plan(Current weather and forecasts<=I used this service).
+- Log in to the open weather app, select the relevant plan(Current weather and forecasts<=I used this service).
 - Get your API key to add .env/backend file 
 
 ### 4. Configure Auth0 Application
@@ -77,7 +77,7 @@ In your [Auth0 Dashboard](https://manage.auth0.com/), configure your Single Page
 - **Allowed Web Origins:**  
   `http://localhost:5173/`
 
-Also, copy the  Domain and Client ID values to add .env of the frontend 
+Also, copy the  Domain and Client ID values to add .env file of the frontend 
 
 
 ### 5. Run the Project
