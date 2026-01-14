@@ -1,0 +1,2 @@
+node_modules
+# if there is node_moduels folder docker will ignore it when creating the image
