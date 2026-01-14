@@ -3,7 +3,6 @@ dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import { readCityCodes } from './utils/readCityCodes.js';
-import { getCacheData, setCacheData } from './utils/cache.js';
 
 const PORT = process.env.PORT || 4000;
 const OPEN_WEATHER_MAP_URL = process.env.OPEN_WEATHER_MAP_URL;
@@ -62,5 +61,5 @@ app.get('/api/weather', async (req, res) => {
 
 //start the express server
 app.listen(PORT, () => {
-  console.log(`Server is running on Port ${PORT}`);
+  console.log(`Server is running on Port ${PORT}...`);
 })
